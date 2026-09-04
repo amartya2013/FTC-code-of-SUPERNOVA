@@ -1,1 +1,38 @@
+Robot Intakes
 
+Roller intake:
+Uses spinning wheels/rollers.
+Simple and fast.
+Can slip or jam if designed poorly.
+
+Compliant wheel intake:
+Uses flexible wheels that grip the game piece.
+Good for handling pieces that aren't perfectly aligned.
+Needs the correct amount of compression.
+
+Pivoting intake:
+Intake moves up/down or rotates.
+Can make the robot more compact.
+More moving parts means more things that can break.
+
+Compression = how much the intake presses against the game piece.
+
+Too little → piece slips.
+Too much → jams, slows the motor, or makes the motor work harder.
+Goal → enough compression for a reliable grip.
+
+The pollen is about 3 inches or 72.6 mm in diameter. So the best spacings are usually the 2.5 inches 
+The rollers press on the Pollen more.  This can give us more grip, but if it's too tight, it could make the intake work harder or cause jams.
+Next there is 2.625 inches it This is the middle option. We can test it to see if it gives us a good balance between grip and smooth movement.
+Lastly, there is the 2. 75 inches. The rollers press on the Pollen less. This could make the intake smoother, but if it's too loose, the rollers might slip.
+
+For autonomous and driving best speeds are:
+0.5 — slower, but gives the driver more control and accuracy.
+0.7 — a normal/faster speed that could be a good balance between speed and control.
+0.8 — faster, but it might be harder to control and could be less efficient for precise movements.
+
+For the top intake rollers i think we should test the speeds:
+0.5 — slower, gentler pickup; good for testing reliability
+0.6 — medium speed; probably a good starting point
+0.7 — faster pickup; test whether it still grips the Pollen
+0.8 — very fast; could work well, but watch for slipping, bouncing, or jams
