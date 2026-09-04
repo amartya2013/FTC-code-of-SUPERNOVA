@@ -1,1 +1,10 @@
-
+variables have 3 parts. name, value, and type.
+this is how to format a variable
+int x =200
+to print a variable use system.out.println(x)
+that will print the variable x which is 200, therefore printing 200
+but instead you could use the shortcut sout and system.out.println() should pop up in a box, click it and it will type thissystem.out.println()
+so the code under here will print 300
+int x =300
+system.out.println(x)
+300
