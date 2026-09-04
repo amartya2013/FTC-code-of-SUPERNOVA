@@ -1,3 +1,4 @@
+MAKE SURE THAT AFTER EVERY LINE OF CODE YOU PUT EITHER SEMICOLON 
 variables have 3 parts. name, value, and type.
 this is how to format a variable
 int x =200 ;   
@@ -18,3 +19,4 @@ x=100;
 system.out.println(x);
 this new code above will change the variables value to 100 and print 100, you will notice we didnt say int, thats because we already declared that x is an integer so we do not need to do it again.
 when we give a variable its first value its called initialization, but when we change that value its called variable assignment
+if you define the type of a same variable more than once in the same scope (scope is whatever is inside the 2 curly brackets) it will give you an error.
