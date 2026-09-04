@@ -20,3 +20,18 @@ system.out.println(x);
 this new code above will change the variables value to 100 and print 100, you will notice we didnt say int, thats because we already declared that x is an integer so we do not need to do it again.
 when we give a variable its first value its called initialization, but when we change that value its called variable assignment
 if you define the type of a same variable more than once in the same scope (scope is whatever is inside the 2 curly brackets) it will give you an error.
+to add 2 different variables together you run the code below
+int x =200
+int y =20
+system.out.println(x+y);
+the result would be the console printing 220 
+you can also use subtraction
+VARIABLE RULES
+#1 YOU CANNOT MAKE A VARIABLE START WITH A NUMBER MEANING, THE VARIABLE NAME CANNOT BE LIKE THIS 1STUDENT
+IT CAN BE LIKE THIS STUDENT1
+int 1student =200  INVALID
+int student1 =200  VALID
+#2 A VARIABLE NAME CANNOT HAVE SPACES AND JAVA ALSO DOES NOT ALLOW MOST SYMBOLS.
+IT ONLY ALLOWS 2 SYMBOLS, UNDERSCORE AND DOLLAR SIGN
+#3 IN A VARIABLE NAME YOU CANNOT USE KEYWORDS MEANING ANYTHING THAT IS KEY CODING WORDS LIKE CLASS AND PUBLIC
+#4 JAVA IS CASE SENSITIVE MEANING IF YOU HAVE VARIABLE AGE AND VARIABLE agE, IT WILL TREAT THEM AS DIFFERENT VARIABLES
