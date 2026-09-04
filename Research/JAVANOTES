@@ -15,4 +15,6 @@ int x ;     this is called variable declaration
 int x =300;
 system.out.println(x);
 x=100;
-this new code above will change the variables value to 100, you will notice we didnt say int, thats because we already declared that x is an integer so we do not need to do it again.
+system.out.println(x);
+this new code above will change the variables value to 100 and print 100, you will notice we didnt say int, thats because we already declared that x is an integer so we do not need to do it again.
+when we give a variable its first value its called initialization, but when we change that value its called variable assignment
