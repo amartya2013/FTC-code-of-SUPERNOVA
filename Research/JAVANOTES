@@ -1,10 +1,18 @@
 variables have 3 parts. name, value, and type.
 this is how to format a variable
-int x =200
+int x =200 ;   
 to print a variable use system.out.println(x)
 that will print the variable x which is 200, therefore printing 200
 but instead you could use the shortcut sout and system.out.println() should pop up in a box, click it and it will type thissystem.out.println()
 so the code under here will print 300
-int x =300
-system.out.println(x)
+int x =300;
+system.out.println(x);
 300
+you could also write it like this
+int x ;     this is called variable declaration
+  x =200 ;   this is called variable initialization
+
+int x =300;
+system.out.println(x);
+x=100;
+this new code above will change the variables value to 100, you will notice we didnt say int, thats because we already declared that x is an integer so we do not need to do it again.
