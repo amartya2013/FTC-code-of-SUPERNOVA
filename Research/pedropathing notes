@@ -72,4 +72,22 @@ public static MecanumConfig driveConfig = new MecanumConfig(
     }
 );
 After pasting what you got from the AutoTune also add c.manualBrakeMode.set(true) for teleop usage if you want to have manual brake mode enabled.
+TESTING DRIVETRAIN
+After completing the tuning steps described in your drivetrain, you can optionally test the driving capabilities of it.
+
+Make your tests method in Tuning.java use your tuned drivetrain. Your localizer and algorithm will be null.
+Inside your Tuning class, add:
+
+Tuning.java
+
+@Tuner
+    public static Procedure tests() {
+        return new Tests(hardwareMap -> new Mecanum(hardwareMap, Constants.drivetrainConfig), (hardwareMap -> new PinpointLocalizer(hardwareMap, Constants.localizerConfig)), () -> new Foresight(Constants.foresightConfig));
+    }
+Verify that you have the create method set up correctly, then build and send the updated code to your Robot.
+While connected to the Robot Controller, open the following address in your browser: http://192.168.43.1:10158
+
+Select Tests Procedure.
+LOCALIZATION TEST
+
 
