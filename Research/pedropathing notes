@@ -1,0 +1,29 @@
+pedro pathing is autonomous pathing
+"Designed to revolutionize autonomous pathing in FTC, Pedro Pathing uses a custom path following algorithm designed for FTC to follow Bézier curves while maintaining speed, consistency, and efficiently correcting for external disturbances."
+pedro pathing is better than driving normaly because it utilizes GVF (Guided Vector Field) plus feedback control.
+
+Using Pedro Pathing for your autonomous routines allows for:
+Faster path execution: Driving speed and correction prioritization is optimized for speed and accuracy.
+Correction for disturbances: Correction for disturbances swiftly returns the robot to the path after disruptions.
+Creating paths on-the-fly: Dynamic path creation enables adaptive pathing in real time.
+Visual path generation: Our visualizer allows for quick and intuitive path generation from simple lines to complex Bézier curves.
+To install pedro pathing on android there are two ways to do that Quickstart and Manual Installation
+For Quickstart 
+In Android Studio, go to Main Menu -> File -> New -> Project from Version Control.
+For the URL, enter https://github.com/Pedro-Pathing/Quickstart.git.
+OR
+Run git clone https://github.com/Pedro-Pathing/Quickstart.git. Make sure you have git installed first.
+For Manual Installation 
+Open build.dependencies.gradle and add the following to your repositories { } block:
+maven { url 'https://repo.dairy.foundation/releases/'}
+Add the following to the dependencies { } block:
+
+
+implementation 'com.pedropathing:revhub:3.0.1'
+implementation 'com.pedropathing:tuning:1.0.0'
+Next, perform a Gradle sync by pressing "sync now" in the blue banner that has appeared, or by clicking on the Gradle Elephant at the top right corner of Android Studio.
+
+Lastly, copy the files from the pedro package in the quickstart into your code.
+After successfully installing, we are ready to start tuning.
+
+
