@@ -3,12 +3,14 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.CRServoImplEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
 public class Autonomous1 extends OpMode {
-//YOU WILL NOT USE SOME OF THESE VARIABLES
+
     private DcMotor leftMotor;
     private DcMotor rightMotor;
     private DcMotor flyWheel;
@@ -21,6 +23,7 @@ public class Autonomous1 extends OpMode {
     final double TRACK_WIDTH_MM = 402;
     final double LAUNCHER_TARGET_VELOCITY =1250;
     final double LAUNCHER_MIN_VELOCITY = 1200;
+    private ElapsedTime windmillTimer = new ElapsedTime();
     @Override
     public void init (){
       leftMotor = hardwareMap.get(DcMotor.class, "leftMotor");
@@ -32,25 +35,49 @@ public class Autonomous1 extends OpMode {
       windmill = hardwareMap.get(CRServo.class, "windmill");
       leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+      leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+      rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
     public void start (){
 
         int targetTicks = (int) (1143*TICKS_PER_MM);
-        leftMotor.setTargetPosition(targetTicks);
         rightMotor.setTargetPosition(targetTicks);
+        leftMotor.setTargetPosition(targetTicks);
         rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightMotor.setPower(0.4);
         leftMotor.setPower(0.4);
+        double turnDistanceMM = (TRACK_WIDTH_MM * Math.PI) / 4.0;
+        int turnTicks = (int) (turnDistanceMM * TICKS_PER_MM);
+        leftMotor.setTargetPosition(turnTicks);
+        rightMotor.setTargetPosition(-turnTicks);
+        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftMotor.setPower(0.3);
+        rightMotor.setPower(0.3);
+        int spinTicks = (int) (LAUNCHER_TARGET_VELOCITY*7);
+        flyWheel.setTargetPosition(spinTicks);
+        int windSpin = (int) (0.7*7);
+        windmillTimer.reset();
+
+
 
     }
     @Override
     public void loop (){
         if (!leftMotor.isBusy()&& !rightMotor.isBusy())
             leftMotor.setPower(0.0);
-            rightMotor.setPower(0.0);
+        rightMotor.setPower(0.0);
+        if (windmillTimer.seconds() < 7.0) {
+            windmill.setPower(1.0); // Use -1.0 if it spins backwards
+            telemetry.addData("Windmill Status", "Spinning");
+        } else {
+            windmill.setPower(0.0);
+            telemetry.addData("Windmill Status", "Stopped");
+        }
+
+        telemetry.addData("Timer", "%.2f seconds", windmillTimer.seconds());
     }
 }
