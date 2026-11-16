@@ -3,18 +3,21 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.CRServoImplEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
-public class Autonomous1 extends OpMode {
-
+public class shootFirstAutonomous extends OpMode {
+    private final double robotPosition1 = 76.3;//robots first move
+    private final double robotPosition2 = 1016;//robots second move
+    private final double robotPosition3 = 2032;//robots third move
+    //makes a variable for all motors and servosw
     private DcMotor leftMotor;
     private DcMotor rightMotor;
     private DcMotor flyWheel;
     private CRServo windmill;
+    //all the other variables needed for the math.(got this from Biobuzz example code)
     final double DRIVE_SPEED = 0.5;
     final double ROTATE_SPEED = 0.2;
     final double WHEEL_DIAMETER_MM = 96;
@@ -23,9 +26,11 @@ public class Autonomous1 extends OpMode {
     final double TRACK_WIDTH_MM = 402;
     final double LAUNCHER_TARGET_VELOCITY =1250;
     final double LAUNCHER_MIN_VELOCITY = 1200;
+    //sets a timer for the windmill
     private ElapsedTime windmillTimer = new ElapsedTime();
     @Override
     public void init (){
+        //sets the direction and makes the motors a variable
       leftMotor = hardwareMap.get(DcMotor.class, "leftMotor");
       leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
       rightMotor = hardwareMap.get(DcMotor.class, "rightMotor");
@@ -41,32 +46,62 @@ public class Autonomous1 extends OpMode {
 
     @Override
     public void start (){
-
-        int targetTicks = (int) (1143*TICKS_PER_MM);
-        rightMotor.setTargetPosition(targetTicks);
-        leftMotor.setTargetPosition(targetTicks);
+        //moves certain distance
+        int targetTicks1 = (int) (robotPosition1*TICKS_PER_MM);
+        rightMotor.setTargetPosition(targetTicks1);
+        leftMotor.setTargetPosition(targetTicks1);
         rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightMotor.setPower(0.4);
         leftMotor.setPower(0.4);
-        double turnDistanceMM = (TRACK_WIDTH_MM * Math.PI) / 4.0;
-        int turnTicks = (int) (turnDistanceMM * TICKS_PER_MM);
-        leftMotor.setTargetPosition(turnTicks);
-        rightMotor.setTargetPosition(-turnTicks);
-        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftMotor.setPower(0.3);
-        rightMotor.setPower(0.3);
+        //shoots pollen
         int spinTicks = (int) (LAUNCHER_TARGET_VELOCITY*7);
         flyWheel.setTargetPosition(spinTicks);
         int windSpin = (int) (0.7*7);
         windmillTimer.reset();
+        //turns left 90 degrees
+        double turnDistanceMM1 = (TRACK_WIDTH_MM * Math.PI) / 4.0;
+        int turnTicks1 = (int) (turnDistanceMM1 * TICKS_PER_MM);
+        leftMotor.setTargetPosition(-turnTicks1);
+        rightMotor.setTargetPosition(turnTicks1);
+        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftMotor.setPower(0.3);
+        rightMotor.setPower(0.3);
+        //moves forward a certain distance
+        int targetTicks2 = (int) (robotPosition2*TICKS_PER_MM);
+        rightMotor.setTargetPosition(targetTicks2);
+        leftMotor.setTargetPosition(targetTicks2);
+        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightMotor.setPower(0.3);
+        leftMotor.setPower(0.3);
+        //turns right
+        double turnDistanceMM2 = (TRACK_WIDTH_MM * Math.PI) / 4.0;
+        int turnTicks2 = (int) (turnDistanceMM2 * TICKS_PER_MM);
+        leftMotor.setTargetPosition(turnTicks2);
+        rightMotor.setTargetPosition(-turnTicks2);
+        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftMotor.setPower(0.3);
+        rightMotor.setPower(0.3);
+        //moves forward into parking zone
+        int targetTicks3 = (int) (robotPosition3*TICKS_PER_MM);
+        rightMotor.setTargetPosition(targetTicks3);
+        leftMotor.setTargetPosition(targetTicks3);
+        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightMotor.setPower(0.3);
+        leftMotor.setPower(0.3);
+
+
 
 
 
     }
     @Override
     public void loop (){
+        //basically stops motors and resets timers
         if (!leftMotor.isBusy()&& !rightMotor.isBusy())
             leftMotor.setPower(0.0);
         rightMotor.setPower(0.0);
