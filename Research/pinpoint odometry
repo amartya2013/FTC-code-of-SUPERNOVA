@@ -1,13 +1,148 @@
-is a competition robotics coprocessor (made by goBILDA) that fuses data from two dead-wheel odometry pods and an internal IMU to track a robot's position and heading
+ @return the raw value of the Y (strafe) encoder in ticks
+     */
+    public int getEncoderY(){return yEncoderValue; }
 
-How It Works
+    /**
+     * @return the estimated X (forward) position of the robot in mm
+     * @deprecated The overflow for this function has a DistanceUnit, which can reduce the chance of unit confusion.
+     */
+    public double getPosX(){
+        return xPosition;
+    }
 
-• Two dead-wheel pods: One non-powered wheel pod tracks forward/backward movement (X axis) and another tracks side-to-side strafing (Y axis).
-• Built-in IMU: An internal Inertial Measurement Unit measures rotation and heading, removing the need for a third odometry pod.
-• Sensor fusion & I²C output: The coprocessor combines wheel tick counts and IMU readings at a high refresh rate and outputs position and orientation to the controller via I²C.
+    /**
+     * @return the estimated X (forward) position of the robot in specified unit
+     * @param distanceUnit the unit that the estimated position will return in
+     */
+    public double getPosX(DistanceUnit distanceUnit){
+        return distanceUnit.fromMm(xPosition);
+    }
 
-Common Uses in Robotics
+    /**
+     * @return the estimated Y (Strafe) position of the robot in mm
+     * @deprecated The overflow for this function has a DistanceUnit, which can reduce the chance of unit confusion.
+     */
+    public double getPosY(){
+        return yPosition;
+    }
 
-• Autonomous navigation: Helps competition robots (especially in FIRST Tech Challenge / FTC) follow paths and return to known field positions accurately.
-• Field-centric driving: Supplies real-time heading data so driver controls stay aligned with the field rather than the robot's current rotation.
-• Camera localization fusion: Can be paired with vision systems (such as AprilTag tracking) to correct drift when visual targets are in view and rely on dead-reckoning when they are not.
+    /**
+     * @return the estimated Y (Strafe) position of the robot in specified unit
+     * @param distanceUnit the unit that the estimated position will return in
+     */
+    public double getPosY(DistanceUnit distanceUnit){
+        return distanceUnit.fromMm(yPosition);
+    }
+
+    /**
+     * @return the unnormalized estimated H (heading) position of the robot in radians
+     * unnormalized heading is not constrained from -180° to 180°. It will continue counting multiple rotations.
+     * @deprecated two overflows for this function exist with AngleUnit parameter. These minimize the possibility of unit confusion.
+     */
+    public double getHeading(){
+        return hOrientation;
+    }
+
+    /**
+     * @return the normalized estimated H (heading) position of the robot in specified unit
+     * normalized heading is wrapped from -180°, to 180°.
+     */
+    public double getHeading(AngleUnit angleUnit){
+        return angleUnit.fromRadians((hOrientation + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+    }
+
+    /**
+     * @return the unnormalized estimated H (heading) position of the robot in specified unit
+     * unnormalized heading is not constrained from -180° to 180°. It will continue counting
+     * multiple rotations.
+     */
+    public double getHeading(UnnormalizedAngleUnit unnormalizedAngleUnit){
+        return unnormalizedAngleUnit.fromRadians(hOrientation);
+    }
+
+    /**
+     * @return the estimated X (forward) velocity of the robot in mm/sec
+     * @deprecated The overflow for this function has a DistanceUnit, which can reduce the chance of unit confusion.
+     */
+    public double getVelX(){
+        return xVelocity;
+    }
+
+    /**
+     * @return the estimated X (forward) velocity of the robot in specified unit/sec
+     */
+    public double getVelX(DistanceUnit distanceUnit){
+        return distanceUnit.fromMm(xVelocity);
+    }
+
+    /**
+     * @return the estimated Y (strafe) velocity of the robot in mm/sec
+     * @deprecated The overflow for this function has a DistanceUnit, which can reduce the chance of unit confusion.
+     */
+    public double getVelY(){
+        return yVelocity;
+    }
+
+    /**
+     * @return the estimated Y (strafe) velocity of the robot in specified unit/sec
+     */
+    public double getVelY(DistanceUnit distanceUnit){
+        return distanceUnit.fromMm(yVelocity);
+    }
+
+    /**
+     * @return the estimated H (heading) velocity of the robot in radians/sec
+     * @deprecated The overflow for this function has an AngleUnit, which can reduce the chance of unit confusion.
+     */
+    public double getHeadingVelocity() {
+        return hVelocity;
+    }
+
+    /**
+     * @return the estimated H (heading) velocity of the robot in specified unit/sec
+     */
+    public double getHeadingVelocity(UnnormalizedAngleUnit unnormalizedAngleUnit){
+        return unnormalizedAngleUnit.fromRadians(hVelocity);
+    }
+
+    /**
+     * <strong> This uses its own I2C read, avoid calling this every loop. </strong>
+     * @return the user-set offset for the X (forward) pod in specified unit
+     */
+    public float getXOffset(DistanceUnit distanceUnit){
+        return (float) distanceUnit.fromMm(readFloat(Register.X_POD_OFFSET));
+    }
+
+    /**
+     * <strong> This uses its own I2C read, avoid calling this every loop. </strong>
+     * @return the user-set offset for the Y (strafe) pod
+     */
+    public float getYOffset(DistanceUnit distanceUnit){
+        return (float) distanceUnit.fromMm(readFloat(Register.Y_POD_OFFSET));
+    }
+
+    /**
+     * @return a Pose2D containing the estimated position of the robot
+     */
+    public Pose2D getPosition(){
+        return new Pose2D(DistanceUnit.MM,
+                xPosition,
+                yPosition,
+                AngleUnit.RADIANS,
+                //this wraps the hOrientation variable from -180° to +180°
+                ((hOrientation + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI);
+    }
+
+    /**
+     * @deprecated This function is not recommended, as velocity is wrapped from -180° to 180°.
+     * instead use individual getters.
+     * @return a Pose2D containing the estimated velocity of the robot, velocity is unit per second
+     */
+    public Pose2D getVelocity(){
+        return new Pose2D(DistanceUnit.MM,
+                xVelocity,
+                yVelocity,
+                AngleUnit.RADIANS,
+                ((hVelocity + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI);
+    }
+}
