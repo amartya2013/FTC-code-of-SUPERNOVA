@@ -1,1 +1,1 @@
-
+is a competition robotics coprocessor (made by goBILDA) that fuses data from two dead-wheel odometry pods and an internal IMU to track a robot's position and heading
