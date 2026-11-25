@@ -1,1 +1,13 @@
 is a competition robotics coprocessor (made by goBILDA) that fuses data from two dead-wheel odometry pods and an internal IMU to track a robot's position and heading
+
+How It Works
+
+• Two dead-wheel pods: One non-powered wheel pod tracks forward/backward movement (X axis) and another tracks side-to-side strafing (Y axis).
+• Built-in IMU: An internal Inertial Measurement Unit measures rotation and heading, removing the need for a third odometry pod.
+• Sensor fusion & I²C output: The coprocessor combines wheel tick counts and IMU readings at a high refresh rate and outputs position and orientation to the controller via I²C.
+
+Common Uses in Robotics
+
+• Autonomous navigation: Helps competition robots (especially in FIRST Tech Challenge / FTC) follow paths and return to known field positions accurately.
+• Field-centric driving: Supplies real-time heading data so driver controls stay aligned with the field rather than the robot's current rotation.
+• Camera localization fusion: Can be paired with vision systems (such as AprilTag tracking) to correct drift when visual targets are in view and rely on dead-reckoning when they are not.
